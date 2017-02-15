@@ -235,7 +235,7 @@ function submit_jobs(
     }
 
     $errfile = "/tmp/create_work_" . getmypid() . ".err";
-    $cmd = "cd " . project_dir() . "; ./bin/create_work --appname $app->name --batch $batch_id --rsc_fpops_est $job->rsc_fpops_est --priority $priority";
+    $cmd = "cd " . project_dir() . "; ./bin/create_work --appname $app->name --batch $batch_id --priority $priority";
     if ($result_template_file) {
         $cmd .= " --result_template templates/$result_template_file";
     }
@@ -289,6 +289,7 @@ function make_result_template($job) {
         $m = md5($job->result_template);
         $filename = "../../templates/tmp/$m";
         if (!file_exists($filename)) {
+            @mkdir("../../templates/tmp");
             file_put_contents($filename, $job->result_template);
         }
         $result_templates[$job->result_template] = $filename;
